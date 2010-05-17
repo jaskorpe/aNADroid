@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">NadClient</string>
+    <string name="app_name">aNADroid</string>
+    <string name="volume">Volume</string>
+    <string name="source">Source</string>
+    <string name="up">+</string>
+    <string name="down">-</string>
+
+    <string-array name="srcList">
+      <item>Aux</item>
+      <item>Video</item>
+      <item>CD</item>
+      <item>Tuner</item>
+      <item>Disc</item>
+    </string-array>
+
 </resources>

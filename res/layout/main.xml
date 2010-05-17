@@ -1,13 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="Hello World, NadClient"
-    />
-</LinearLayout>
+	      android:orientation="vertical"
+	      android:layout_width="fill_parent"
+	      android:layout_height="fill_parent"
+	      >
 
+  <TextView  
+      android:layout_width="fill_parent" 
+      android:layout_height="wrap_content" 
+      android:text="@string/volume"
+      />
+
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="horizontal"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		>
+    <Button
+	android:id="@+id/volUp"
+	android:layout_width="0px"
+	android:layout_height="wrap_content"
+	android:layout_weight="1"
+	android:text="@string/up"
+	/>
+    <Button
+	android:id="@+id/volDown"
+	android:layout_width="0px"
+	android:layout_height="wrap_content"
+	android:layout_weight="1"
+	android:text="@string/down"
+	/>
+  </LinearLayout>
+
+  <TextView
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/source"
+      />
+  
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="horizontal"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		>
+    <Button
+	android:id="@+id/srcUp"
+	android:layout_width="0px"
+	android:layout_height="wrap_content"
+	android:layout_weight="1"
+	android:text="@string/up"
+	/>
+    <Button
+	android:id="@+id/srcDown"
+	android:layout_width="0px"
+	android:layout_height="wrap_content"
+	android:layout_weight="1"
+	android:text="@string/down"
+	/>
+  </LinearLayout>
+
+  <Spinner
+      android:id="@+id/sourceSpinner"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:prompt="@string/source"
+      />
+
+  <TextView
+      android:id="@+id/error"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      />
+</LinearLayout>
