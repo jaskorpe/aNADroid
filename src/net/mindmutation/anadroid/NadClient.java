@@ -38,6 +38,7 @@ public class NadClient extends Activity
     private OutputStream output;
     private byte[] command;
 
+    private boolean realSelection;
 
     private void sendCommand(String command)
     {
@@ -67,54 +68,37 @@ public class NadClient extends Activity
 	
     }
 
+
+    public void clickHandler(View v)
+    {
+	switch(v.getId()) {
+	case R.id.volUp:
+	    sendCommand("\rMain.Volume+\r\0");
+	    break;
+	case R.id.volDown:
+	    sendCommand("\rMain.Volume-\r\0");
+	    break;
+	case R.id.srcUp:
+	    sendCommand("\rMain.Source+\r\0");
+	    break;
+	case R.id.srcDown:
+	    sendCommand("\rMain.Source-\r\0");
+	    break;
+	}
+    }
+
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+	realSelection = false;
+
         setContentView(R.layout.main);
 
 	error = (TextView)this.findViewById(R.id.error);
-
-	volumeUp = (Button)this.findViewById(R.id.volUp);
-	volumeUp.setOnClickListener(new OnClickListener()
-	{
-	    @Override
-	    public void onClick(View v)
-	    {
-		sendCommand("\rMain.Volume+\r\0");
-	    }
-	});
-
-	volumeDown = (Button)this.findViewById(R.id.volDown);
-	volumeDown.setOnClickListener(new OnClickListener()
-	{
-	    @Override
-	    public void onClick(View v)
-	    {
-		sendCommand("\rMain.Volume-\r\0");
-	    }
-	});
-
-	sourceUp = (Button)this.findViewById(R.id.srcUp);
-	sourceUp.setOnClickListener(new OnClickListener()
-	{
-	    @Override
-	    public void onClick(View v)
-	    {
-		sendCommand("\rMain.Source+\r\0");
-	    }
-	});
-
-	sourceDown = (Button)this.findViewById(R.id.srcDown);
-	sourceDown.setOnClickListener(new OnClickListener()
-	{
-	    @Override
-	    public void onClick(View v)
-	    {
-		sendCommand("\rMain.Source-\r\0");
-	    }
-	});
 
 	sourceSpinner = (Spinner)this.findViewById(R.id.sourceSpinner);
 	ArrayAdapter<CharSequence> adapter =
@@ -127,17 +111,35 @@ public class NadClient extends Activity
     }
 
 
+    @Override
+    public void onPause()
+    {
+	realSelection = false;
+	super.onPause();
+    }	
+
+
     public class OnSourceSelectedListener implements OnItemSelectedListener
     {
 	public void onItemSelected(AdapterView<?> parent, View view,
 				   int pos, long id)
 	{
+	    /* Hackity hack hack since the spinner for some reason
+	     * does not support onItemClick, only onItemSelected
+	     * But this works great.
+	     */
+	    if (!realSelection) {
+		realSelection = true;
+		return;
+	    }
+
 	    Toast.makeText(parent.getContext(), "Source: " +
 		parent.getItemAtPosition(pos).toString(),
 			   Toast.LENGTH_LONG).show();
 
 	    sendCommand("\rMain.Source=" +
 			parent.getItemAtPosition(pos).toString() + "\r\0");
+
 	}
 
 	public void onNothingSelected(AdapterView parent)

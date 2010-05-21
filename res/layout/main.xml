@@ -22,6 +22,7 @@
 	android:layout_height="wrap_content"
 	android:layout_weight="1"
 	android:text="@string/up"
+	android:onClick="clickHandler"
 	/>
     <Button
 	android:id="@+id/volDown"
@@ -29,6 +30,7 @@
 	android:layout_height="wrap_content"
 	android:layout_weight="1"
 	android:text="@string/down"
+	android:onClick="clickHandler"
 	/>
   </LinearLayout>
 
@@ -49,6 +51,7 @@
 	android:layout_height="wrap_content"
 	android:layout_weight="1"
 	android:text="@string/up"
+	android:onClick="clickHandler"
 	/>
     <Button
 	android:id="@+id/srcDown"
@@ -56,6 +59,7 @@
 	android:layout_height="wrap_content"
 	android:layout_weight="1"
 	android:text="@string/down"
+	android:onClick="clickHandler"
 	/>
   </LinearLayout>
 
