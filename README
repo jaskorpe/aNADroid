@@ -1,0 +1,10 @@
+The main purpose of this program is to control NAD amplifiers. It is
+not yet ready for general use, but has most of the core functionality
+in place. It can not connect to the amplifier directly, but it will
+comunicate with a daemon, which in turn can control the amplifier via
+RS232. The daemon address is hard coded for now. Expect a less idiotic
+way of setting the address soon. Also, be careful if you are testing.
+Bugs could lead to damage to speakers and bleeding from ears.
+
+--
+Jon Anders Skorpen - jaskorpe@ping.uio.no

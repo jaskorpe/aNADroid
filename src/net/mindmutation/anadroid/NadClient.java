@@ -1,8 +1,26 @@
+/* Copyright (C) 2010 Jon Anders Skorpen
+ * 
+ * This file is part of aNADroid.
+ *
+ * aNADroid is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * aNADroid is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ 
+ * You should have received a copy of the GNU General Public License
+ * along with aNADroid.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package net.mindmutation.anadroid;
 
 import android.app.Activity;
 import android.os.Bundle;
-
+import android.content.res.Configuration;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Spinner;
@@ -39,6 +57,8 @@ public class NadClient extends Activity
     private byte[] command;
 
     private boolean realSelection;
+    private int lastSelection;
+
 
     private void sendCommand(String command)
     {
@@ -106,17 +126,35 @@ public class NadClient extends Activity
 					    this, R.array.srcList,
 					    android.R.layout.simple_spinner_item);
 	adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
 	sourceSpinner.setAdapter(adapter);
 	sourceSpinner.setOnItemSelectedListener(new OnSourceSelectedListener());
     }
 
 
-    @Override
-    public void onPause()
-    {
-	realSelection = false;
-	super.onPause();
-    }	
+    // @Override
+    // public void onRestart()
+    // {
+    // 	Toast.makeText(this, "onRestart",
+    // 		       Toast.LENGTH_LONG).show();
+
+    // 	super.onRestart();
+    // }
+
+
+    // @Override
+    // public void onStart()
+    // {
+    // 	super.onStart();
+    // }
+
+
+    // @Override
+    // public void onResume()
+    // {
+    // 	super.onResume();
+    // 	realSelection = false;
+    // }
 
 
     public class OnSourceSelectedListener implements OnItemSelectedListener
@@ -124,21 +162,26 @@ public class NadClient extends Activity
 	public void onItemSelected(AdapterView<?> parent, View view,
 				   int pos, long id)
 	{
+	    String source;
+
 	    /* Hackity hack hack since the spinner for some reason
 	     * does not support onItemClick, only onItemSelected
-	     * But this works great.
+	     * But this works great. Probably... :p
 	     */
 	    if (!realSelection) {
 		realSelection = true;
 		return;
 	    }
+	    lastSelection = pos;
+	    realSelection = true;
+
+	    source = parent.getItemAtPosition(pos).toString();
 
 	    Toast.makeText(parent.getContext(), "Source: " +
-		parent.getItemAtPosition(pos).toString(),
-			   Toast.LENGTH_LONG).show();
+		source, Toast.LENGTH_LONG).show();
 
 	    sendCommand("\rMain.Source=" +
-			parent.getItemAtPosition(pos).toString() + "\r\0");
+			source + "\r\0");
 
 	}
 
