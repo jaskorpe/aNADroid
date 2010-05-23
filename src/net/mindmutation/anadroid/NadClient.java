@@ -64,7 +64,8 @@ public class NadClient extends Activity
     {
 	try {
 	    // Fix user defined host
-	    addr = InetAddress.getByName("knuth.ping.uio.no");
+	    String host = getResources().getText(R.string.host).toString();
+	    addr = InetAddress.getByName(host);
 	    socket = new Socket(addr, 1234);
 	} catch (UnknownHostException e) {
 	    error.setText("Unknown host: " + e.getMessage());
@@ -91,6 +92,9 @@ public class NadClient extends Activity
 
     public void clickHandler(View v)
     {
+	/* Would be nice to get these strings
+	 * from res/values
+	 */
 	switch(v.getId()) {
 	case R.id.volUp:
 	    sendCommand("\rMain.Volume+\r\0");

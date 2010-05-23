@@ -25,6 +25,8 @@ along with aNADroid.  If not, see <http://www.gnu.org/licenses/>.
     <string name="up">+</string>
     <string name="down">-</string>
 
+    <string name="host">knuth.ping.uio.no</string>
+
     <string-array name="srcList">
       <item>Aux</item>
       <item>Video</item>
