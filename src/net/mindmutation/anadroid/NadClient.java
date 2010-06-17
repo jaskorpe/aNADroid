@@ -1,5 +1,5 @@
 /* Copyright (C) 2010 Jon Anders Skorpen
- * 
+ *
  * This file is part of aNADroid.
  *
  * aNADroid is free software: you can redistribute it and/or modify
@@ -11,7 +11,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- 
+
  * You should have received a copy of the GNU General Public License
  * along with aNADroid.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -62,53 +62,53 @@ public class NadClient extends Activity
 
     private void sendCommand(String command)
     {
-	try {
-	    // Fix user defined host
-	    String host = getResources().getText(R.string.host).toString();
-	    addr = InetAddress.getByName(host);
-	    socket = new Socket(addr, 1234);
-	} catch (UnknownHostException e) {
-	    error.setText("Unknown host: " + e.getMessage());
-	    return;
-	} catch (IOException e) {
-	    error.setText("IO: " + e.getMessage());
-	    return;
-	} catch (SecurityException e) {
-	    error.setText("Security: " + e.getMessage());
-	    return;
-	}
-		
-	try {
-	    output = socket.getOutputStream();
-	    output.write(command.getBytes());
-	    socket.close();
-	} catch(IOException e) {
-	    error.setText("Could not write command: " + e.getMessage());
-	    return;
-	}
-	
+        try {
+            // Fix user defined host
+            String host = getResources().getText(R.string.host).toString();
+            addr = InetAddress.getByName(host);
+            socket = new Socket(addr, 1234);
+        } catch (UnknownHostException e) {
+            error.setText("Unknown host: " + e.getMessage());
+            return;
+        } catch (IOException e) {
+            error.setText("IO: " + e.getMessage());
+            return;
+        } catch (SecurityException e) {
+            error.setText("Security: " + e.getMessage());
+            return;
+        }
+
+        try {
+            output = socket.getOutputStream();
+            output.write(command.getBytes());
+            socket.close();
+        } catch(IOException e) {
+            error.setText("Could not write command: " + e.getMessage());
+            return;
+        }
+
     }
 
 
     public void clickHandler(View v)
     {
-	/* Would be nice to get these strings
-	 * from res/values
-	 */
-	switch(v.getId()) {
-	case R.id.volUp:
-	    sendCommand("\rMain.Volume+\r\0");
-	    break;
-	case R.id.volDown:
-	    sendCommand("\rMain.Volume-\r\0");
-	    break;
-	case R.id.srcUp:
-	    sendCommand("\rMain.Source+\r\0");
-	    break;
-	case R.id.srcDown:
-	    sendCommand("\rMain.Source-\r\0");
-	    break;
-	}
+        /* Would be nice to get these strings
+         * from res/values
+         */
+        switch(v.getId()) {
+        case R.id.volUp:
+            sendCommand("\rMain.Volume+\r\0");
+            break;
+        case R.id.volDown:
+            sendCommand("\rMain.Volume-\r\0");
+            break;
+        case R.id.srcUp:
+            sendCommand("\rMain.Source+\r\0");
+            break;
+        case R.id.srcDown:
+            sendCommand("\rMain.Source-\r\0");
+            break;
+        }
     }
 
 
@@ -118,79 +118,80 @@ public class NadClient extends Activity
     {
         super.onCreate(savedInstanceState);
 
-	realSelection = false;
+        realSelection = false;
 
         setContentView(R.layout.main);
 
-	error = (TextView)this.findViewById(R.id.error);
+        error = (TextView)this.findViewById(R.id.error);
 
-	sourceSpinner = (Spinner)this.findViewById(R.id.sourceSpinner);
-	ArrayAdapter<CharSequence> adapter =
-	    ArrayAdapter.createFromResource(
-					    this, R.array.srcList,
-					    android.R.layout.simple_spinner_item);
-	adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sourceSpinner = (Spinner)this.findViewById(R.id.sourceSpinner);
+        ArrayAdapter<CharSequence> adapter =
+            ArrayAdapter.createFromResource(this, R.array.srcList,
+                                            android.R.layout.simple_spinner_item
+                                            );
+        adapter.setDropDownViewResource(android.R.
+                                        layout.simple_spinner_dropdown_item);
 
-	sourceSpinner.setAdapter(adapter);
-	sourceSpinner.setOnItemSelectedListener(new OnSourceSelectedListener());
+        sourceSpinner.setAdapter(adapter);
+        sourceSpinner.setOnItemSelectedListener(new OnSourceSelectedListener());
     }
 
 
     // @Override
     // public void onRestart()
     // {
-    // 	Toast.makeText(this, "onRestart",
-    // 		       Toast.LENGTH_LONG).show();
+    //  Toast.makeText(this, "onRestart",
+    //        Toast.LENGTH_LONG).show();
 
-    // 	super.onRestart();
+    // super.onRestart();
     // }
 
 
     // @Override
     // public void onStart()
     // {
-    // 	super.onStart();
+    // super.onStart();
     // }
 
 
     // @Override
     // public void onResume()
     // {
-    // 	super.onResume();
-    // 	realSelection = false;
+    // super.onResume();
+    // realSelection = false;
     // }
 
 
     public class OnSourceSelectedListener implements OnItemSelectedListener
     {
-	public void onItemSelected(AdapterView<?> parent, View view,
-				   int pos, long id)
-	{
-	    String source;
+        public void onItemSelected(AdapterView<?> parent, View view,
+                                   int pos, long id)
+        {
+            String source;
 
-	    /* Hackity hack hack since the spinner for some reason
-	     * does not support onItemClick, only onItemSelected
-	     * But this works great. Probably... :p
-	     */
-	    if (!realSelection) {
-		realSelection = true;
-		return;
-	    }
-	    lastSelection = pos;
-	    realSelection = true;
+            /* Hackity hack hack since the spinner for some reason
+             * does not support onItemClick, only onItemSelected
+             * But this works great. Probably... :p
+             */
+            if (!realSelection) {
+                realSelection = true;
+                return;
+            }
+            lastSelection = pos;
+            realSelection = true;
 
-	    source = parent.getItemAtPosition(pos).toString();
+            source = parent.getItemAtPosition(pos).toString();
 
-	    Toast.makeText(parent.getContext(), "Source: " +
-		source, Toast.LENGTH_LONG).show();
+            Toast.makeText(parent.getContext(), "Source: " +
+                           source, Toast.LENGTH_LONG).show();
 
-	    sendCommand("\rMain.Source=" +
-			source + "\r\0");
+            sendCommand("\rMain.Source=" +
+                        source + "\r\0");
 
-	}
+        }
 
-	public void onNothingSelected(AdapterView parent)
-	{
-	}
+        public void onNothingSelected(AdapterView parent)
+        {
+        }
     }
 }
